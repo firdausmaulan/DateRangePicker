@@ -1,19 +1,17 @@
 package com.savvi.rangedatepicker;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
@@ -122,19 +120,19 @@ public class CalendarPickerView extends RecyclerView {
 
         Resources res = context.getResources();
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CalendarPickerView);
-        final int bg = a.getColor(R.styleable.CalendarPickerView_android_background,
-                res.getColor(R.color.calendar_bg));
+        final int bg = a.getColor(R.styleable.CalendarPickerView_tsquare_background,
+                ContextCompat.getColor(getContext(), R.color.calendar_bg));
         dividerColor = a.getColor(R.styleable.CalendarPickerView_tsquare_dividerColor,
-                res.getColor(R.color.calendar_divider));
+                ContextCompat.getColor(getContext(), R.color.calendar_divider));
         dayBackgroundResId = a.getResourceId(R.styleable.CalendarPickerView_tsquare_dayBackground,
                 R.drawable.calendar_bg_selector);
         dayTextColorResId = a.getResourceId(R.styleable.CalendarPickerView_tsquare_dayTextColor,
                 R.drawable.day_text_color);
         titleTextColor = a.getColor(R.styleable.CalendarPickerView_tsquare_titleTextColor,
-                res.getColor(R.color.dateTimeRangePickerTitleTextColor));
+                ContextCompat.getColor(getContext(), R.color.dateTimeRangePickerTitleTextColor));
         displayHeader = a.getBoolean(R.styleable.CalendarPickerView_tsquare_displayHeader, true);
         headerTextColor = a.getColor(R.styleable.CalendarPickerView_tsquare_headerTextColor,
-                res.getColor(R.color.dateTimeRangePickerHeaderTextColor));
+                ContextCompat.getColor(getContext(), R.color.dateTimeRangePickerHeaderTextColor));
         orientation = a.getBoolean(R.styleable.CalendarPickerView_tsquare_orientation_horizontal, false);
 
         a.recycle();
@@ -142,9 +140,9 @@ public class CalendarPickerView extends RecyclerView {
 
         adapter = new MonthAdapter();
         if(!orientation){
-            layoutManager = new LinearLayoutManager(getContext(), VERTICAL, monthsReverseOrder);
+            layoutManager = new WrapContentLinearLayoutManager(getContext(), VERTICAL, monthsReverseOrder);
         }else {
-            layoutManager = new LinearLayoutManager(getContext(), HORIZONTAL, monthsReverseOrder);
+            layoutManager = new WrapContentLinearLayoutManager(getContext(), HORIZONTAL, monthsReverseOrder);
             SnapHelper snapHelper = new LinearSnapHelper();
             snapHelper.attachToRecyclerView(this);
         }
@@ -180,7 +178,6 @@ public class CalendarPickerView extends RecyclerView {
      * @param minDate Earliest selectable date, inclusive.  Must be earlier than {@code maxDate}.
      * @param maxDate Latest selectable date, exclusive.  Must be later than {@code minDate}.
      */
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public FluentInitializer init(Date minDate, Date maxDate, TimeZone timeZone, Locale locale, DateFormat monthNameFormat) {
 
         if (minDate == null || maxDate == null) {
@@ -473,8 +470,8 @@ public class CalendarPickerView extends RecyclerView {
     public void unfixDialogDimens() {
         Logr.d("Reset the fixed dimensions to allow for re-measurement");
         // Fix the layout height/width after the dialog has been shown.
-        getLayoutParams().height = LayoutParams.MATCH_PARENT;
-        getLayoutParams().width = LayoutParams.MATCH_PARENT;
+        getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+        getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
         requestLayout();
     }
 

@@ -1,7 +1,6 @@
 package com.savvi.rangepickersample;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -41,7 +40,7 @@ public class SampleActivity extends AppCompatActivity {
         calendar.deactivateDates(list);
         ArrayList<Date> arrayList = new ArrayList<>();
         try {
-            SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 
             String strdate = "22-4-2019";
             String strdate2 = "26-4-2019";
@@ -54,7 +53,7 @@ public class SampleActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        calendar.init(lastYear.getTime(), nextYear.getTime(), new SimpleDateFormat("MMMM, YYYY", Locale.getDefault())) //
+        calendar.init(lastYear.getTime(), nextYear.getTime(), new SimpleDateFormat("MMMM, yyyy", Locale.getDefault())) //
                 .inMode(CalendarPickerView.SelectionMode.RANGE) //
                 .withDeactivateDates(list)
                 .withSubTitles(getSubTitles())
@@ -63,12 +62,13 @@ public class SampleActivity extends AppCompatActivity {
         calendar.scrollToDate(new Date());
 
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(SampleActivity.this, "list " + calendar.getSelectedDates().toString(), Toast.LENGTH_LONG).show();
-            }
-        });
+        button.setOnClickListener(view ->
+                Toast.makeText(
+                        SampleActivity.this,
+                        "list " + calendar.getSelectedDates().toString(),
+                        Toast.LENGTH_LONG
+                ).show()
+        );
     }
 
     private ArrayList<SubTitle> getSubTitles() {

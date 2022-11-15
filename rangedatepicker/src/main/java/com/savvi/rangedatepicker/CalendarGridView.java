@@ -13,6 +13,8 @@ import static android.view.View.MeasureSpec.AT_MOST;
 import static android.view.View.MeasureSpec.EXACTLY;
 import static android.view.View.MeasureSpec.makeMeasureSpec;
 
+import androidx.core.content.ContextCompat;
+
 /**
  * ViewGroup that draws a grid of calendar cells.  All children must be {@link CalendarRowView}s.
  * The first row is assumed to be a header and no divider is drawn above it.
@@ -30,7 +32,7 @@ public class CalendarGridView extends ViewGroup {
 
   public CalendarGridView(Context context, AttributeSet attrs) {
     super(context, attrs);
-    dividerPaint.setColor(getResources().getColor(R.color.calendar_divider));
+    dividerPaint.setColor(ContextCompat.getColor(getContext(), R.color.calendar_divider));
   }
 
   public void setDividerColor(int color) {
@@ -51,7 +53,7 @@ public class CalendarGridView extends ViewGroup {
 
   public void setDayTextColor(int resId) {
     for (int i = 0; i < getChildCount(); i++) {
-      ColorStateList colors = getResources().getColorStateList(resId);
+      ColorStateList colors = ContextCompat.getColorStateList(getContext(), resId);
       ((CalendarRowView) getChildAt(i)).setCellTextColor(colors);
     }
   }
@@ -97,7 +99,7 @@ public class CalendarGridView extends ViewGroup {
     final boolean retVal = super.drawChild(canvas, child, drawingTime);
     // Draw a bottom border.
     final int bottom = child.getBottom() - 1;
-    canvas.drawLine(child.getLeft(), bottom, child.getRight() - 2, bottom, dividerPaint);
+    canvas.drawLine(child.getLeft(), bottom, child.getRight() - 2F, bottom, dividerPaint);
     return retVal;
   }
 

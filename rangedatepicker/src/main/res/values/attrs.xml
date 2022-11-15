@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <declare-styleable name="CalendarPickerView">
-    <attr name="android:background"/>
+    <attr name="tsquare_background" format="color"/>
     <attr name="tsquare_dividerColor" format="color"/>
     <attr name="tsquare_dayBackground" format="reference"/>
     <attr name="tsquare_dayTextColor" format="color"/>

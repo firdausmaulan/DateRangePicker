@@ -79,7 +79,6 @@ public class MonthView extends LinearLayout {
     }
 
     private static boolean isRtl(Locale locale) {
-        // TODO convert the build to gradle and use getLayoutDirection instead of this (on 17+)?
         final int directionality = Character.getDirectionality(locale.getDisplayName(locale).charAt(0));
         return directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT
                 || directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC;
@@ -105,7 +104,9 @@ public class MonthView extends LinearLayout {
     }
 
     public void init(MonthDescriptor month, List<List<MonthCellDescriptor>> cells,
-                     boolean displayOnly, Typeface titleTypeface, Typeface dateTypeface, ArrayList<Integer> deactivatedDates, @Nullable ArrayList<SubTitle> subTitles) {
+                     boolean displayOnly, Typeface titleTypeface, Typeface dateTypeface,
+                     ArrayList<Integer> deactivatedDates,
+                     @Nullable ArrayList<SubTitle> subTitles) {
 
 
         Logr.d("Initializing MonthView (%d) for %s", System.identityHashCode(this), month);
